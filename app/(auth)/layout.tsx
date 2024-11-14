@@ -39,6 +39,7 @@ export default function AuthLayout({
             <section className="flex flex-1 flex-col items-center bg-white p-4 py-10 lg:justify-center lg:p-10 lg:py-0">
                 <div className="mb-16 lg:hidden">
                     <Image
+                        priority
                         src={Logo}
                         alt="logo"
                         height={82}
