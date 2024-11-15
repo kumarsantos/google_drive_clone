@@ -5,9 +5,10 @@ import { appWriteConfig } from '../appwrite/config';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { parseStringify } from '../utils';
+import { PLACEHOLDER_IMAGE } from '@/constants';
 
 
-const getUserByEmail = async (email: string) => {
+export const getUserByEmail = async (email: string) => {
     const { database } = await createAdminClient();
     const result = await database.listDocuments(
         appWriteConfig.databaseId,
@@ -17,7 +18,7 @@ const getUserByEmail = async (email: string) => {
     return result.total > 0 ? result.documents[0] : null;
 };
 
-const handleError = (error: unknown, message: string) => {
+export const handleError = async(error: unknown, message: string) => {
     console.log(error, message);
     throw error;
 };
@@ -51,7 +52,7 @@ export const createAccount = async ({
             {
                 fullName,
                 email,
-                avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+                avatar: PLACEHOLDER_IMAGE,
                 accountId
             }
         );

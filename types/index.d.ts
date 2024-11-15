@@ -1,15 +1,30 @@
-declare type FileType = "document" | "image" | "video" | "audio" | "other";
+declare type FileType = 'document' | 'image' | 'video' | 'audio' | 'other';
 
+export interface Props {
+    fullName: string;
+    email: string;
+    avatar: string;
+    ownerId: string;
+    accountId: string;
+}
+
+export interface UploadFileProps{
+    file:File;
+    ownerId:string;
+    accountId:string;
+    path?:string;
+    className?:string;
+}
 // declare interface ActionType {
 //   label: string;
 //   icon: string;
 //   value: string;
 // }
 
-// declare interface SearchParamProps {
-//   params?: Promise<SegmentParams>;
-//   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
-// }
+declare interface SearchParamProps {
+  params?: Promise<SegmentParams>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}
 
 // declare interface UploadFileProps {
 //   file: File;

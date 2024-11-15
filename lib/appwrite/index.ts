@@ -2,12 +2,14 @@
 import { Account, Avatars, Client, Databases, Storage } from 'node-appwrite';
 import { appWriteConfig } from './config';
 import { cookies } from 'next/headers';
+
+
 export const createSessionClient = async () => {
     const client = new Client()
         .setEndpoint(appWriteConfig.endpoint)
         .setProject(appWriteConfig.projectId);
 
-    const session = (await cookies()).get('appwrite-session');
+    const session = (await cookies()).get('app_write_session');
     if (!session || !session.value) {
         throw new Error('No Session');
     }
@@ -21,6 +23,8 @@ export const createSessionClient = async () => {
         }
     };
 };
+
+
 export const createAdminClient = async () => {
     const client = new Client()
         .setEndpoint(appWriteConfig.endpoint)
