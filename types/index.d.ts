@@ -12,14 +12,14 @@ export interface UploadFileProps{
     file:File;
     ownerId:string;
     accountId:string;
-    path?:string;
+    path:string;
     className?:string;
 }
-// declare interface ActionType {
-//   label: string;
-//   icon: string;
-//   value: string;
-// }
+declare interface ActionType {
+  label: string;
+  icon: string;
+  value: string;
+}
 
 declare interface SearchParamProps {
   params?: Promise<SegmentParams>;
@@ -32,28 +32,28 @@ declare interface SearchParamProps {
 //   accountId: string;
 //   path: string;
 // }
-// declare interface GetFilesProps {
-//   types: FileType[];
-//   searchText?: string;
-//   sort?: string;
-//   limit?: number;
-// }
-// declare interface RenameFileProps {
-//   fileId: string;
-//   name: string;
-//   extension: string;
-//   path: string;
-// }
-// declare interface UpdateFileUsersProps {
-//   fileId: string;
-//   emails: string[];
-//   path: string;
-// }
-// declare interface DeleteFileProps {
-//   fileId: string;
-//   bucketFileId: string;
-//   path: string;
-// }
+declare interface GetFilesProps {
+  types: FileType[];
+  searchText?: string;
+  sort?: string;
+  limit?: number;
+}
+declare interface RenameFileProps {
+  fileId: string;
+  name: string;
+  extension: string;
+  path: string;
+}
+declare interface UpdateFileUsersProps {
+  fileId: string;
+  emails: string[];
+  path: string;
+}
+declare interface DeleteFileProps {
+  fileId: string;
+  bucketFileId: string;
+  path: string;
+}
 
 // declare interface FileUploaderProps {
 //   ownerId: string;
