@@ -63,29 +63,61 @@ export const uploadFile = async ({
     }
 };
 
-const createQueries = (currentUser: Models.Document, types: string[]) => {
+const createQueries = (
+    currentUser: Models.Document,
+    types: string[],
+    searchText: string,
+    sort: string,
+    limit?: number
+) => {
     const queries = [
         Query.or([
             Query.equal('owner', [currentUser.$id]),
             Query.contains('users', [currentUser.email])
         ])
     ];
-    //adding filter based on the types
+    // adding filter based on the types
     if (types.length > 0) {
         queries.push(Query.equal('type', types));
     }
-    ///TODO Search,sort,limits
+    // search query
+    if (searchText) {
+        queries.push(Query.contains('name', searchText));
+    }
+    // limit to specific count of records
+    if (limit) {
+        queries.push(Query.limit(limit));
+    }
+    // sort
+    if (sort) {
+        const [sortBy, orderBy] = sort?.split('-');
+        queries.push(
+            orderBy === 'asc' ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
+        );
+    }
+
     return queries;
 };
 
-export const getFiles = async ({ types = [] }: GetFilesProps) => {
+export const getFiles = async ({
+    searchText = '',
+    sort = '$createdAt-desc',
+    limit = 10,
+    types = []
+}: GetFilesProps) => {
     const { database } = await createAdminClient();
     try {
         const currentUser = await getCurrentUser();
         if (!currentUser) {
             throw new Error('User not found');
         }
-        const queries = createQueries(currentUser, types);
+        const queries = createQueries(
+            currentUser,
+            types,
+            searchText,
+            sort,
+            limit
+        );
         const files = await database.listDocuments(
             appWriteConfig.databaseId,
             appWriteConfig.filesCollectionId,
