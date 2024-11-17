@@ -37,3 +37,30 @@ export const actionDropdownItems = [
 export const PLACEHOLDER_IMAGE =
     'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png';
 export const MAX_FILE_SIZE = 50000000;
+
+export const sortTypes = [
+    {
+      label: "Date created (newest)",
+      value: "$createdAt-desc",
+    },
+    {
+      label: "Created Date (oldest)",
+      value: "$createdAt-asc",
+    },
+    {
+      label: "Name (A-Z)",
+      value: "name-asc",
+    },
+    {
+      label: "Name (Z-A)",
+      value: "name-desc",
+    },
+    {
+      label: "Size (Highest)",
+      value: "size-desc",
+    },
+    {
+      label: "Size (Lowest)",
+      value: "size-asc",
+    },
+  ];
