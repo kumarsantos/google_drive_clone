@@ -1,3 +1,4 @@
+import { FileType } from '@/types';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -236,4 +237,8 @@ export const getFileTypesParams = (type: string) => {
         default:
             return ['document'];
     }
+};
+
+export const calculateAngle = (usedBytes: number, maxBytes: number) => {
+    return (usedBytes / maxBytes) * 360;
 };
