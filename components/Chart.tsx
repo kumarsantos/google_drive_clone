@@ -35,6 +35,9 @@ const chartConfig = {
 export const Chart = ({ used = 0 }: { used: number }) => {
     const chartData = [{ storage: 'used', 10: used, fill: 'white' }];
     const angleValue = Number(calculateAngle(used, 2147483648)) + 90;
+    const spaceUsed =
+        (used && calculatePercentage(used).toString().replace(/^0+/, '')) ||
+        '0';
 
     return (
         <Card className="chart">
@@ -86,18 +89,7 @@ export const Chart = ({ used = 0 }: { used: number }) => {
                                                     y={viewBox.cy}
                                                     className="chart-total-percentage"
                                                 >
-                                                    {used &&
-                                                    calculatePercentage(used)
-                                                        ? calculatePercentage(
-                                                              used + 1073741824
-                                                          )
-                                                              .toString()
-                                                              .replace(
-                                                                  /^0+/,
-                                                                  ''
-                                                              )
-                                                        : '0'}
-                                                    %
+                                                    {spaceUsed}%
                                                 </tspan>
                                                 <tspan
                                                     x={viewBox.cx}

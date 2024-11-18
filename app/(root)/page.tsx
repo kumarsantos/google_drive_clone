@@ -1,10 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-// import { Models } from 'node-appwrite';
-
-// import { ActionsDropdown } from '@/components/ActionsDropdown';
 import { Chart } from '@/components/Chart';
-// import { Thumbnail } from '@/components/Thumbnail';
 import { Separator } from '@/components/ui/separator';
 import { getFiles, getTotalSpaceUsed } from '@/lib/actions/file.actions';
 import { convertFileSize, getUsageSummary } from '@/lib/utils';
@@ -66,10 +62,8 @@ const Dashboard = async () => {
                 </ul>
             </section>
 
-            <section className="dashboard-recent-files">
-                {/* Recent files uploaded */}
-                <RecentUploadedFIles files={files} />
-            </section>
+            {/* Recent files uploaded */}
+            <RecentUploadedFIles files={files} />
         </div>
     );
 };
