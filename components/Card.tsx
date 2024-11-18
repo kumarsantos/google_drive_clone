@@ -6,9 +6,13 @@ import { convertFileSize } from '@/lib/utils';
 import FormattedDateTime from './FormattedDateTime';
 import ActionDropDown from './ActionDropDown';
 import { getCurrentUser } from '@/lib/actions/user.actions';
+import { redirect } from 'next/navigation';
 
 const Card = async ({ file }: { file: Models.Document }) => {
     const currentUser = await getCurrentUser();
+    if(!currentUser){
+        redirect('/sign-in')
+    }
     return (
         <Link href={file.url} target="_blank" className="file-card">
             <div className="flex justify-between">
