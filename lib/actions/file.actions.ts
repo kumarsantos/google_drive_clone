@@ -235,7 +235,7 @@ export async function getTotalSpaceUsed() {
 
         return parseStringify(totalSpace);
     } catch (error) {
-        handleError(error, 'Error calculating total space used:');
+       await  handleError(error, 'Error calculating total space used:');
     }
 }
 

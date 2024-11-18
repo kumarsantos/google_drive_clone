@@ -7,6 +7,11 @@ import { cookies } from 'next/headers';
 import { parseStringify } from '../utils';
 import { PLACEHOLDER_IMAGE } from '@/constants';
 
+export const handleError = async (error: unknown, message: string) => {
+    console.log(error, message);
+    return { msg: 'message', success: false, error };
+};
+
 export const getUserByEmail = async (email: string) => {
     try {
         const { database } = await createAdminClient();
@@ -17,13 +22,8 @@ export const getUserByEmail = async (email: string) => {
         );
         return result.total > 0 ? result.documents[0] : null;
     } catch (error) {
-        console.log(error);
+        await handleError(error, 'Failed to get user');
     }
-};
-
-export const handleError = async (error: unknown, message: string) => {
-    console.log(error, message);
-    throw error;
 };
 
 export const sendEmailOTP = async ({ email }: { email: string }) => {
@@ -43,24 +43,28 @@ export const createAccount = async ({
     fullName: string;
     email: string;
 }) => {
-    const existingUser = await getUserByEmail(email);
-    const accountId = await sendEmailOTP({ email });
-    if (!accountId) throw new Error('Failed to send an OTP');
-    if (!existingUser) {
-        const { database } = await createAdminClient();
-        await database.createDocument(
-            appWriteConfig.databaseId,
-            appWriteConfig.usersCollectionId,
-            ID.unique(),
-            {
-                fullName,
-                email,
-                avatar: PLACEHOLDER_IMAGE,
-                accountId
-            }
-        );
+    try {
+        const existingUser = await getUserByEmail(email);
+        const accountId = await sendEmailOTP({ email });
+        if (!accountId) throw new Error('Failed to send an OTP');
+        if (!existingUser) {
+            const { database } = await createAdminClient();
+            await database.createDocument(
+                appWriteConfig.databaseId,
+                appWriteConfig.usersCollectionId,
+                ID.unique(),
+                {
+                    fullName,
+                    email,
+                    avatar: PLACEHOLDER_IMAGE,
+                    accountId
+                }
+            );
+        }
+        return parseStringify({ accountId });
+    } catch (e) {
+        await handleError(e, 'Failed to create account');
     }
-    return parseStringify({ accountId });
 };
 
 export const verifySecret = async ({
