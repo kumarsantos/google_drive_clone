@@ -3,12 +3,18 @@ import React from 'react';
 import FavIcon from '@/public/assets/icons/logo-full.svg';
 import Illustration from '@/public/assets/images/files.png';
 import Logo from '@/public/assets/icons/logo-full-brand.svg';
+import { getCurrentUser } from '@/lib/actions/user.actions';
+import { redirect } from 'next/navigation';
 
-export default function AuthLayout({
+export default async function AuthLayout({
     children
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const currentUser = await getCurrentUser();
+    if (currentUser) {
+        redirect('/');
+    }
     return (
         <div className="flex min-h-screen">
             <section className="hidden w-1/2 items-center justify-center bg-brand p-10 lg:flex xl:w-2/5">
