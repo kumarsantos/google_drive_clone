@@ -63,7 +63,7 @@ const FileUploader = ({ ownerId, accountId, className }: UploadFileProps) => {
             });
             await Promise.all(uploadPromises);
         },
-        [ownerId, accountId, path]
+        [ownerId, accountId, path, toast]
     );
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -71,7 +71,7 @@ const FileUploader = ({ ownerId, accountId, className }: UploadFileProps) => {
     });
 
     const handleRemove = (
-        e: MouseEvent<HTMLImageElement, MouseEvent>,
+        e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>,
         filename: string
     ) => {
         e.stopPropagation();
@@ -87,7 +87,7 @@ const FileUploader = ({ ownerId, accountId, className }: UploadFileProps) => {
             </Button>
             {files.length > 0 && (
                 <ul className="uploader-preview-list">
-                    <h4 className="h4 text-white-100">Uploading</h4>
+                    <h4 className="h4 text-light-100">Uploading</h4>
                     {files.map((file, index) => {
                         const { type, extension } = getFileType(file.name);
                         return (
