@@ -4,12 +4,14 @@ import React from 'react';
 import Thumbnail from './Thumbnail';
 import FormattedDateTime from './FormattedDateTime';
 import ActionDropDown from './ActionDropDown';
+import { getCurrentUser } from '@/lib/actions/user.actions';
 
-const RecentUploadedFiles = ({
+const RecentUploadedFiles = async ({
     files: { documents }
 }: {
     files: { documents: Models.Document };
 }) => {
+    const currentUser = await getCurrentUser();
     return (
         <section className="dashboard-recent-files">
             <h2 className="h3 xl:h2 text-light-100">Recent files uploaded</h2>
@@ -38,7 +40,10 @@ const RecentUploadedFiles = ({
                                         className="caption"
                                     />
                                 </div>
-                                <ActionDropDown file={file} />
+                                <ActionDropDown
+                                    file={file}
+                                    currentUser={currentUser}
+                                />
                             </div>
                         </Link>
                     ))}

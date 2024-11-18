@@ -4,11 +4,9 @@ import React, { useState } from 'react';
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger
+    DialogTitle
 } from '@/components/ui/dialog';
 import {
     DropdownMenu,
@@ -34,7 +32,6 @@ import {
 } from '@/lib/actions/file.actions';
 import { usePathname } from 'next/navigation';
 import { DeleteFile, FileDetails, ShareInput } from './ActionsModalContent';
-import { toast } from '@/hooks/use-toast';
 
 const ActionDropDown = ({
     file,
