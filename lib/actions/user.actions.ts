@@ -1,4 +1,4 @@
-"use server"
+'use server';
 import { ID, Query } from 'node-appwrite';
 import { createAdminClient, createSessionClient } from '../appwrite';
 import { appWriteConfig } from '../appwrite/config';
@@ -7,18 +7,21 @@ import { cookies } from 'next/headers';
 import { parseStringify } from '../utils';
 import { PLACEHOLDER_IMAGE } from '@/constants';
 
-
 export const getUserByEmail = async (email: string) => {
-    const { database } = await createAdminClient();
-    const result = await database.listDocuments(
-        appWriteConfig.databaseId,
-        appWriteConfig.usersCollectionId,
-        [Query.equal('email', [email])]
-    );
-    return result.total > 0 ? result.documents[0] : null;
+    try {
+        const { database } = await createAdminClient();
+        const result = await database.listDocuments(
+            appWriteConfig.databaseId,
+            appWriteConfig.usersCollectionId,
+            [Query.equal('email', [email])]
+        );
+        return result.total > 0 ? result.documents[0] : null;
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-export const handleError = async(error: unknown, message: string) => {
+export const handleError = async (error: unknown, message: string) => {
     console.log(error, message);
     throw error;
 };
@@ -78,7 +81,7 @@ export const verifySecret = async ({
         });
         return parseStringify({ sessionId: session.$id });
     } catch (error) {
-        handleError(error, 'Failed to verify OTP');
+        await handleError(error, 'Failed to verify OTP');
     }
 };
 
@@ -99,12 +102,12 @@ export const getCurrentUser = async () => {
 };
 
 export const signOutUser = async () => {
-    const { account } = await createSessionClient();
     try {
+        const { account } = await createSessionClient();
         await account.deleteSession('current');
         (await cookies()).delete('app_write_session');
     } catch (error) {
-        handleError(error, 'Failed to sign out user');
+        await handleError(error, 'Failed to sign out user');
     } finally {
         redirect('/sign-in');
     }
@@ -119,6 +122,6 @@ export const signInUser = async ({ email }: { email: string }) => {
         }
         return parseStringify({ accountId: null, error: 'User not found' });
     } catch (error) {
-        handleError(error, 'Failed to sign in user');
+        await handleError(error, 'Failed to sign in user');
     }
 };
