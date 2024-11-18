@@ -1,5 +1,6 @@
 import { FileType } from '@/types';
 import { clsx, type ClassValue } from 'clsx';
+import { Models } from 'node-appwrite';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -241,4 +242,13 @@ export const getFileTypesParams = (type: string) => {
 
 export const calculateAngle = (usedBytes: number, maxBytes: number) => {
     return (usedBytes / maxBytes) * 360;
+};
+
+export const getTotalFileSize = (documents: Models.Document[]) => {
+    let totalSize = 0;
+    for (let item of documents) {
+        totalSize += item.size;
+    }
+    const fileSize = convertFileSize(totalSize);
+    return fileSize;
 };

@@ -2,7 +2,7 @@ import { Models } from 'node-appwrite';
 import React from 'react';
 import Thumbnail from './Thumbnail';
 import FormattedDateTime from './FormattedDateTime';
-import { convertFileSize, formatDateTime } from '@/lib/utils';
+import { cn, convertFileSize, formatDateTime } from '@/lib/utils';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import Image from 'next/image';
@@ -107,9 +107,15 @@ export const ShareInput = ({ file, onInputChange, onRemove }: Props) => {
     );
 };
 
-export const DeleteFile = ({ file }: { file: Models.Document }) => {
+export const DeleteFile = ({
+    file,
+    className
+}: {
+    file: Models.Document;
+    className?: string;
+}) => {
     return (
-        <p className="delete-confirmation">
+        <p className={cn('delete-confirmation', className)}>
             Are you sure you want to delete {` `}
             <span className="delete-file-name">{file.name}</span>?
         </p>

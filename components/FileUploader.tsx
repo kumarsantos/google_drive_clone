@@ -13,7 +13,6 @@ import { uploadFile } from '@/lib/actions/file.actions';
 import { usePathname } from 'next/navigation';
 import { MAX_FILE_SIZE } from '@/constants';
 import { UploadFileProps } from '@/types';
-import { InputFile } from 'node-appwrite/file';
 
 const FileUploader = ({ ownerId, accountId, className }: UploadFileProps) => {
     const [files, setFiles] = useState<File[]>([]);

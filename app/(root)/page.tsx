@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { getFiles, getTotalSpaceUsed } from '@/lib/actions/file.actions';
 import { convertFileSize, getUsageSummary } from '@/lib/utils';
 import FormattedDateTime from '@/components/FormattedDateTime';
-import RecentUploadedFIles from '@/components/RecentUploadedFiles';
+import RecentUploadedFiles from '@/components/RecentUploadedFiles';
 
 const Dashboard = async () => {
     // Parallel requests
@@ -63,7 +63,7 @@ const Dashboard = async () => {
             </section>
 
             {/* Recent files uploaded */}
-            <RecentUploadedFIles files={files} />
+            <RecentUploadedFiles files={files} />
         </div>
     );
 };

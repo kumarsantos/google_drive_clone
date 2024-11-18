@@ -5,13 +5,17 @@ import Thumbnail from './Thumbnail';
 import FormattedDateTime from './FormattedDateTime';
 import ActionDropDown from './ActionDropDown';
 
-const RecentUploadedFiles = ({ files }: { files: Models.Database[] }) => {
+const RecentUploadedFiles = ({
+    files: { documents }
+}: {
+    files: { documents: Models.Document };
+}) => {
     return (
         <section className="dashboard-recent-files">
             <h2 className="h3 xl:h2 text-light-100">Recent files uploaded</h2>
-            {files?.documents?.length > 0 ? (
+            {documents?.length > 0 ? (
                 <ul className="mt-5 flex flex-col gap-5">
-                    {files?.documents?.map((file: Models.Document) => (
+                    {documents?.map((file: Models.Document) => (
                         <Link
                             href={file.url}
                             target="_blank"

@@ -36,7 +36,13 @@ import { usePathname } from 'next/navigation';
 import { DeleteFile, FileDetails, ShareInput } from './ActionsModalContent';
 import { toast } from '@/hooks/use-toast';
 
-const ActionDropDown = ({ file }: { file: Models.Document }) => {
+const ActionDropDown = ({
+    file,
+    currentUser
+}: {
+    file: Models.Document;
+    currentUser: Models.Document;
+}) => {
     const [isModelOpen, setIsModelOpen] = useState(false);
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
     const [selectedAction, setSelectedAction] = useState<ActionType | null>(
@@ -47,6 +53,7 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
     const [emails, setEmails] = useState<string[]>([]);
 
     const path = usePathname();
+    const isOwner = file?.owner?.$id === currentUser?.$id;
 
     // HANDLE ALL THE ACTIONS
     const handleSubmit = async () => {
@@ -150,7 +157,7 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
                             Cancel
                         </Button>
                         <Button
-                            disabled={isLoading}
+                            disabled={isLoading || !isOwner}
                             onClick={handleSubmit}
                             className="modal-submit-button"
                         >
